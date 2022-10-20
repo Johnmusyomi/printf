@@ -20,9 +20,9 @@ int _printf(const char *format, ...)
 
 	va_start(list, format);
 
-	for (index = 0; format && format[i] != '\0'; i++)
+	for (index = 0; format && format[index] != '\0'; index++)
 	{
-		if (format[i] != '%')
+		if (format[index] != '%')
 		{
 			buffer[buffer_index++] = format[index];
 			if (buffer_index == BUFFER_SIZE)
@@ -31,10 +31,10 @@ int _printf(const char *format, ...)
 		}
 		else
 		{
-			print_buffer(9buffer, &buffer_index);
+			print_buffer(buffer, &buffer_index);
 			flags = get_flags(format, &index);
 			width = get_width(format, &index, list);
-			precision = get_precisin(format, &&index, list);
+			precision = get_precisin(format, &index, list);
 			size = get_size(format, &index);
 			++index;
 			printed = handle_print(format, &index, list, buffer, flags,
@@ -44,8 +44,9 @@ int _printf(const char *format, ...)
 			printed_chars += printed;
 		}
 	}
-	printed_buffer(buffer, &&buffer_index);
+	printed_buffer(buffer, &buffer_index);
 	va_end(list);
+
 	return (printed_chars);
 }
 
